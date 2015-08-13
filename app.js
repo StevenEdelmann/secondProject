@@ -47,9 +47,27 @@ app.get('/subforum/:id', function(req, res){ //subforum, list of all the threads
             res.send(render);    
 		}
 
-    });
+	});
 
 }); //end of app.get("subforums/id")
 
-//this is supposed to show all the posts in a thread.
-app.post('/subforum/:id', function(req, res){}); 
+//This is the route that gets the specific threads inside the subforums
+app.get('/thread/:id', function(req, res){
+	var id = req.params.id; 
+
+	db.all("SELECT * FROM posts WHERE posts.thread_id=?", id, function(error, rows){
+		if (error){
+			console.log(error);
+		}
+		else{
+            var html = fs.readFileSync('./views/thread.html', 'utf8');
+            var render = ejs.render(html, {rows: rows});
+            res.send(render);    			
+		}
+	});
+});
+
+app.get("/posts", function(req, res){
+	var html = fs.readFileSync('./views/posts.html', "utf8");
+	res.send(html);
+});

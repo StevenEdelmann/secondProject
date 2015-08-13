@@ -40,7 +40,7 @@
 	<div id="allThreads">
 		<% rows.forEach(function(row){%>
 			<div class="Thread">
-				<h2> <%= row.title%> </h2>
+				<h2> <a href="/thread/<%=row.id%>"> <%= row.title%> </a> </h2>
 				<h2> Creator: <%= row.creator%> </h2>
 			</div>
 		<% }); %>	
