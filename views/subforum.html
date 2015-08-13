@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> <%= %> </title>
+
+	<style type="text/css">
+
+	h1 {
+		text-align: center;
+		font-size: 40px;
+		color: red;
+		border: 10px groove;
+		background-color: lightgreen;
+	}
+
+	#copyright {
+		color: red;
+		bottom: 40px;
+		text-align: right;
+	}
+
+	#allThreads {
+		text-align: center;
+		border: 5px groove;
+	}
+
+	#Thread {
+		color: black;
+	}
+
+	</style>
+</head>
+
+<body>
+
+	<h1>Here are the current threads</h1>
+
+	<h4> <a href="/">Back to subforum index</a></h4>
+
+	<div id="allThreads">
+		<% rows.forEach(function(row){%>
+			<div class="Thread">
+				<h2> <%= row.title%> </h2>
+				<h2> Creator: <%= row.creator%> </h2>
+			</div>
+		<% }); %>	
+	</div>
+
+	<div id="copyright">
+		<h4>Copyright Weir Doe</h4>
+	</div>
+
+</body>
+
+</html>

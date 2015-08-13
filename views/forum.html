@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Welcome!</title>
+	<style type="text/css">
+
+		body {
+			background-color: lightblue;
+		}
+
+		#welcome {
+			color: blue;
+			text-align: center;
+		}
+
+		#copyright {
+			color: red;
+			bottom: 40px;
+			text-align: right;
+		}
+
+		.Subforum {
+			color: black;
+			border: 5px groove;
+		}
+
+	</style>
+</head>
+
+<body>
+
+	<div id="welcome">
+		<h1>Welcome! Choose a subforum to begin</h1>
+
+			<% rows.forEach(function(row){%>
+			  <div class="Subforum">
+				<h2> <a href="/subforum/<%=row.id%>"> <%= row.name %> </a></h2>
+				<h3> <%= row.description %> </h3>
+			  </div>
+			<% }); %>	
+
+	</div>
+
+	<div id="copyright">
+		<h4>Copyright Weir Doe</h4>
+	</div>
+	
+
+</body>
+</html>
