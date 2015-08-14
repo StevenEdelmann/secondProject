@@ -34,17 +34,26 @@
 </head>
 <body>
 
-	<h3 id="comment"> <a href="/posts"> Comment on thread </a> </h3>
+	<form>
+		<h3 id="comment"> <a href="/posts"> Comment on thread </a> </h3>
+	</form>
+
 	<h3 id="back"><a href="/subforum/:id">Back to thread index</a></h3>
 	
 	<div id="allPosts">
-		<% rows.forEach(function(row){%>
+		<% temp.forEach(function(row){%>
 			<div class="Post">
 				<h2> Poster: <%= row.poster%> </h2>
 				<h2> <%= row.content%> </h2>
 			</div>
 		<% }); %>	
 	</div>
+
+
+	<% myPosts.forEach(function(row){ %>
+		<h1> <%= row.content %> </h1>
+	<% }) %>
+
 
 	<div id="copyright">
 		<h4>Copyright Weir Doe</h4>

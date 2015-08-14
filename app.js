@@ -60,9 +60,14 @@ app.get('/thread/:id', function(req, res){
 			console.log(error);
 		}
 		else{
-            var html = fs.readFileSync('./views/thread.html', 'utf8');
-            var render = ejs.render(html, {rows: rows});
-            res.send(render);    			
+			var temp = rows;
+			db.all("SELECT * FROM posts WHERE thread_id=?", temp.id, function(error, rows){
+				var myPosts = rows;
+	            var html = fs.readFileSync('./views/thread.html', 'utf8');
+	            var render = ejs.render(html, {temp: temp, myPosts: myPosts});
+	            res.send(render);    
+
+            });			
 		}
 	});
 });
