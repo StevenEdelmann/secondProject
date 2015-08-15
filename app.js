@@ -36,13 +36,13 @@ app.get('/', function(req, res){ //root, it's the forum homepage, list of all th
 
 app.get('/subforum/:id', function(req, res){ //subforum, list of all the threads
 	var id = req.params.id; //req.params is the route string.
+    var html = fs.readFileSync('./views/subforum.html', 'utf8');
 
-	db.all("Select * FROM thread WHERE thread.subforum_id=?", id, function(error, rows){ //get all the subforum id's.
+	db.all("Select * FROM thread WHERE thread.subforum_id=?", id, function(error, rows){ //get all the threads with subforum id's.
 		if (error){
 			console.log(error);
 		}
 		else{
-            var html = fs.readFileSync('./views/subforum.html', 'utf8');
             var render = ejs.render(html, {rows: rows});
             res.send(render);    
 		}
@@ -54,25 +54,50 @@ app.get('/subforum/:id', function(req, res){ //subforum, list of all the threads
 //This is the route that gets the specific threads inside the subforums
 app.get('/thread/:id', function(req, res){
 	var id = req.params.id; 
+	var html = fs.readFileSync('./views/thread.html', 'utf8');
 
 	db.all("SELECT * FROM posts WHERE posts.thread_id=?", id, function(error, rows){
 		if (error){
 			console.log(error);
 		}
 		else{
-			var temp = rows;
-			db.all("SELECT * FROM posts WHERE thread_id=?", temp.id, function(error, rows){
-				var myPosts = rows;
-	            var html = fs.readFileSync('./views/thread.html', 'utf8');
-	            var render = ejs.render(html, {temp: temp, myPosts: myPosts});
-	            res.send(render);    
-
-            });			
+			console.log(rows);
+		    var rendered = ejs.render(html, {rows: rows});
+	        res.send(rendered);    
 		}
+	
 	});
+
 });
 
+//grabs the page where user makes new posts.
 app.get("/posts", function(req, res){
-	var html = fs.readFileSync('./views/posts.html', "utf8");
+	var html = fs.readFileSync("./views/posts.html", "utf8");
 	res.send(html);
 });
+
+//updates the posts table with the new post.
+app.post("/post", function(req, res){
+	var newPost = req.body; //grabs all the stuff from the form in "/views/posts.html".
+
+	db.get("INSERT INTO posts (poster, content) Values (?, ?)", newPost.poster, newPost.content, function(error, rows){
+		if(error){ console.log(error) };
+	});
+
+	res.redirect("/");
+}); //end of app.post(/posts).
+
+
+
+// app.post("/thread/:id", function(req, res){
+// 	var id = req.params.id;
+// 	var html = fs.readFileSync('./views/thread.html', 'utf8');
+
+// 	db.get("SELECT * FROM posts WHERE posts.thread_id=?", id, function(error, rows){
+// 		var myPosts = rows;
+// 		var temp = rows;
+// 		var render = ejs.render(html, {temp: posts, myPosts: myPosts});
+// 	    res.send(render);    
+
+//     });	
+// });

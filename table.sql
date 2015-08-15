@@ -21,8 +21,8 @@ CREATE TABLE thread (
 CREATE TABLE posts (
 	id INTEGER primary key AUTOINCREMENT,
 	thread_id INTEGER,
-	content VARCHAR,
 	poster VARCHAR,
+	content VARCHAR,
 	FOREIGN KEY (thread_id) REFERENCES thread (id)
 );
 
