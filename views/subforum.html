@@ -36,12 +36,13 @@
 	<h1>Here are the current threads</h1>
 
 	<h4> <a href="/">Back to subforum index</a></h4>
+	<h4> <a href="/newThread">Create new thread</h4>
 
 	<div id="allThreads">
 		<% rows.forEach(function(row){%>
 			<div class="Thread">
 				<h2> <a href="/thread/<%=row.id%>"> <%= row.title%> </a> </h2>
-				<h2> Creator: <%= row.creator%> </h2>
+				<h3> Creator: <%= row.creator%> </h3>
 			</div>
 		<% }); %>	
 	</div>

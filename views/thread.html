@@ -29,6 +29,7 @@
 
 		#Post {
 			color: black;
+			border: 5px groove;
 		}
 	</style>
 </head>
@@ -36,15 +37,16 @@
 
 	<div id="threadName"> <%= %> </div>
 
-	<form>
+
 		<h3 id="comment"> <a href="/posts"> Comment on thread </a> </h3>
-	</form>
+		<h3> <a href="/">Back to subforum index </a></h3>
+
 	
 	<div id="allPosts">
 		<% rows.forEach(function(row){%>
 			<div class="Post">
 				<h2> Poster: <%= row.poster%> </h2>
-				<h2> <%= row.content%> </h2>
+				<p> <%= row.content%> </p>
 			</div>
 		<% }); %>	
 	</div>

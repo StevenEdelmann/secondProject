@@ -35,7 +35,7 @@ INSERT INTO subforum (name, description) VALUES ("Entertainment and Pop-Culture"
 INSERT INTO subforum (name, description) VALUES ("Games", "Come here to play games online with other forum members!");
 INSERT INTO subforum (name, description) VALUES ("Other", "Come here to discuss anything not covered in the other subforums");
 
-INSERT INTO thread (subforum_id, title, creator) VALUES (1, "What's your favorite sex position?", "Master");
+INSERT INTO thread (subforum_id, title, creator) VALUES (1, "Are you married?", "Master");
 INSERT INTO thread (subforum_id, title, creator) VALUES (2, "What Philosophy do you most agree with?", "Master");
 INSERT INTO thread (subforum_id, title, creator) VALUES (3, "What's your favorite sport?", "Master");
 INSERT INTO thread (subforum_id, title, creator) VALUES (4, "What's your favorite genre of music?", "Master");

@@ -12,6 +12,7 @@ var bodyparser = require('body-parser');
 var methodOverride = require('method-override');
 var urlencodedbodyparser = bodyparser.urlencoded({extended: false}); //Still don't fully understand what this is.
 app.use(methodOverride("_method"));
+app.use(bodyparser.urlencoded({ extended: true }));
 
 app.listen(port, function(){
 	console.log("Listening on port ", port);
@@ -49,6 +50,17 @@ app.get('/subforum/:id', function(req, res){ //subforum, list of all the threads
 
 	});
 
+	app.post("/thread", function(req, res){
+		var newThread = req.body; //grabs all the stuff from the form in "/views/posts.html".
+
+		db.get("INSERT INTO thread (title, creator, subforum_id) Values (?, ?, ?)", newThread.title, newThread.creator, id, function(error, rows){
+			if(error){ console.log(error) };
+		});
+
+
+		res.redirect("/");
+	}); //end of app.post(/posts).
+
 }); //end of app.get("subforums/id")
 
 //This is the route that gets the specific threads inside the subforums
@@ -68,6 +80,17 @@ app.get('/thread/:id', function(req, res){
 	
 	});
 
+	app.post("/posts", function(req, res){
+		var newPost = req.body; //grabs all the stuff from the form in "/views/posts.html".
+
+		db.get("INSERT INTO posts (poster, content, thread_id) Values (?, ?, ?)", newPost.poster, newPost.content, id, function(error, rows){
+			if(error){ console.log(error) };
+		});
+
+
+		res.redirect("/");
+	}); //end of app.post(/posts).
+
 });
 
 //grabs the page where user makes new posts.
@@ -76,28 +99,8 @@ app.get("/posts", function(req, res){
 	res.send(html);
 });
 
-//updates the posts table with the new post.
-app.post("/post", function(req, res){
-	var newPost = req.body; //grabs all the stuff from the form in "/views/posts.html".
+app.get("/newThread", function(req, res){
+	var html = fs.readFileSync("./views/newThread.html", "utf8");
+	res.send(html);
+});
 
-	db.get("INSERT INTO posts (poster, content) Values (?, ?)", newPost.poster, newPost.content, function(error, rows){
-		if(error){ console.log(error) };
-	});
-
-	res.redirect("/");
-}); //end of app.post(/posts).
-
-
-
-// app.post("/thread/:id", function(req, res){
-// 	var id = req.params.id;
-// 	var html = fs.readFileSync('./views/thread.html', 'utf8');
-
-// 	db.get("SELECT * FROM posts WHERE posts.thread_id=?", id, function(error, rows){
-// 		var myPosts = rows;
-// 		var temp = rows;
-// 		var render = ejs.render(html, {temp: posts, myPosts: myPosts});
-// 	    res.send(render);    
-
-//     });	
-// });
