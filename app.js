@@ -53,7 +53,7 @@ app.get('/subforum/:id', function(req, res){ //subforum, list of all the threads
 	app.post("/thread", function(req, res){
 		var newThread = req.body; //grabs all the stuff from the form in "/views/posts.html".
 
-		db.get("INSERT INTO thread (title, creator, subforum_id) Values (?, ?, ?)", newThread.title, newThread.creator, id, function(error, rows){
+		db.get("INSERT INTO thread (title, creator, subforum_id) Values (?, ?, ?)", newThread.title, newThread.creator, newThread.subforumID, function(error, rows){
 			if(error){ console.log(error) };
 		});
 
@@ -83,7 +83,7 @@ app.get('/thread/:id', function(req, res){
 	app.post("/posts", function(req, res){
 		var newPost = req.body; //grabs all the stuff from the form in "/views/posts.html".
 
-		db.get("INSERT INTO posts (poster, content, thread_id) Values (?, ?, ?)", newPost.poster, newPost.content, id, function(error, rows){
+		db.get("INSERT INTO posts (poster, content, thread_id) Values (?, ?, ?)", newPost.poster, newPost.content, newPost.threadID, function(error, rows){
 			if(error){ console.log(error) };
 		});
 
@@ -103,4 +103,3 @@ app.get("/newThread", function(req, res){
 	var html = fs.readFileSync("./views/newThread.html", "utf8");
 	res.send(html);
 });
-
